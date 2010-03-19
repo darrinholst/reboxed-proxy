@@ -11,11 +11,12 @@
 
 ActiveRecord::Schema.define(:version => 20100319023226) do
 
-  create_table "movies", :force => true do |t|
+  create_table "titles", :force => true do |t|
     t.string   "name"
     t.string   "sort_name"
     t.string   "image"
     t.date     "released"
+    t.integer  "product_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -4,13 +4,14 @@ task :load_titles => :environment do
     json = JSON.parse(f.read)
 
     json.each do |row|
-      movie = Movie.new
-      movie.id = row['ID']
-      movie.name = row['Name']
-      movie.sort_name = row['SortName']
-      movie.image = row['Img']
-      movie.released = Date.parse(row["Release"])
-      movie.save
+      title = Title.new
+      title.id = row['ID']
+      title.name = row['Name']
+      title.sort_name = row['SortName']
+      title.image = row['Img']
+      title.released = Date.parse(row['Release'])
+      title.product_type = row['ProductType']
+      title.save
     end
   end
 end
