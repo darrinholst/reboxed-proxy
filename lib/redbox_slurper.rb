@@ -1,5 +1,11 @@
 class RedboxSlurper
-  def self.slurp_titles_from(url)
+  attr_accessor :url
+
+  def initialize(url)
+    self.url = url;
+  end
+
+  def slurp_titles
     puts "getting #{url}"
     resp = RestClient.get(url)
 
