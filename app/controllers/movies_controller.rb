@@ -5,7 +5,7 @@ class MoviesController < ApplicationController
     cached = Rails.cache.read(cache_key)
 
     unless(cached)
-      movies = Title.oldest.movies.since(date).find(:all, :limit => 500)
+      movies = Title.oldest.movies.since(date).find(:all, :limit => 200)
       cached = movies.to_json(:only => [:id, :name, :image, :released, :description, :rating, :running_time, :actors, :genre, :yahoo_rating])
       Rails.cache.write(cache_key, cached)
     end
