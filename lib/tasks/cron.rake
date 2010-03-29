@@ -1,8 +1,13 @@
-task :cron => :environment do
-  metadata = RedboxMetadata.new("http://www.redbox.com/data.svc/Title")
+TITLES_URL = "http://www.redbox.com/data.svc/Title/js"
+METADATA_URL = "http://www.redbox.com/data.svc/Title"
 
-  50.times do
-    title = Title.empty_metadata.find(:first)
-    metadata.add_to(title) if title
+task :cron => :environment do
+  if Time.now.hour % 4 == 0
+    puts "Time to slurp"
+
+    if RedboxSlurper.new(TITLES_URL, METADATA_URL).slurp_titles > 0
+      puts "clearing cache"
+      Rails.cache.clear
+    end
   end
 end
