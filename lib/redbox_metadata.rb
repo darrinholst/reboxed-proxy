@@ -14,6 +14,7 @@ class RedboxMetadata
 
   def add_to(title)
     puts "adding metadata to #{title.name}(#{title.id})"
+    return
     puts token
 
     postData = "{\"type\":\"Title\",\"pk\":\"ID\",\"statements\":[{\"filters\":{\"ID\":#{title.id}},\"sort\":null,\"flags\":null}],\"__K\":\"l/egA7t7RJiRgezDSAG1tFWhFl/dpmDeHFWjeKws7IM=\"}"
