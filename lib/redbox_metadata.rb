@@ -16,16 +16,17 @@ class RedboxMetadata
     puts "adding metadata to #{title.name}(#{title.id})"
     puts token
 
-    postData = JSON.generate({
-      "type" => "Title",
-      "pk" => "ID",
-      "statements" => [{
-        "filters" => {"ID" => title.id},
-        "sort" => nil,
-        "flags" => nil
-      }],
-      "__K" => token
-    })
+    postData = "{\"type\":\"Title\",\"pk\":\"ID\",\"statements\":[{\"filters\":{\"ID\":#{title.id}},\"sort\":null,\"flags\":null}],\"__K\":\"l/egA7t7RJiRgezDSAG1tFWhFl/dpmDeHFWjeKws7IM=\"}"
+    # postData = JSON.generate({
+    #   "type" => "Title",
+    #   "pk" => "ID",
+    #   "statements" => [{
+    #     "filters" => {"ID" => title.id},
+    #     "sort" => nil,
+    #     "flags" => nil
+    #   }],
+    #   "__K" => token
+    # })
 
     puts postData
 
