@@ -3,7 +3,8 @@ class RedboxMetadata
 
   def initialize(url)
     self.url = url
-    initialize_token
+    self.token = "l/egA7t7RJiRgezDSAG1tFWhFl/dpmDeHFWjeKws7IM="
+    #initialize_token
   end
 
   def initialize_token
