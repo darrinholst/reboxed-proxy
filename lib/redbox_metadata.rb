@@ -27,6 +27,8 @@ class RedboxMetadata
       "__K" => token
     })
 
+    puts postData
+
     resp = RestClient.post(url, postData)
 
     match = /\{.*?\:(.*)\}/.match(resp.body)
