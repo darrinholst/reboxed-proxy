@@ -1,8 +1,14 @@
 class RedboxMetadata
-  attr_accessor :url
+  attr_accessor :url, :token
 
   def initialize(url)
     self.url = url
+    initialize_token
+  end
+
+  def initialize_token
+    resp = RestClient.get("http://www.redbox.com")
+    self.token = resp.body.match(/__K.*value="(.*)"/)[1]
   end
 
   def add_to(title)
@@ -16,7 +22,7 @@ class RedboxMetadata
         "sort" => nil,
         "flags" => nil
       }],
-      "__K" => "UKNKOWN"
+      "__K" => token
     })
 
     resp = RestClient.post(url, postData)
