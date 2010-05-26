@@ -1,37 +1,37 @@
 class RedboxMetadata
-  attr_accessor :url, :token
+  attr_accessor :url, :token, :cookies
 
   def initialize(url)
     self.url = url
-    self.token = "l/egA7t7RJiRgezDSAG1tFWhFl/dpmDeHFWjeKws7IM="
-    #initialize_token
+    initialize_token
   end
 
   def initialize_token
     resp = RestClient.get("http://www.redbox.com")
     self.token = resp.body.match(/__K.*value="(.*)"/)[1]
+    self.cookies = resp.cookies
   end
 
   def add_to(title)
     puts "adding metadata to #{title.name}(#{title.id})"
-    return
-    puts token
 
-    postData = "{\"type\":\"Title\",\"pk\":\"ID\",\"statements\":[{\"filters\":{\"ID\":#{title.id}},\"sort\":null,\"flags\":null}],\"__K\":\"l/egA7t7RJiRgezDSAG1tFWhFl/dpmDeHFWjeKws7IM=\"}"
-    # postData = JSON.generate({
-    #   "type" => "Title",
-    #   "pk" => "ID",
-    #   "statements" => [{
-    #     "filters" => {"ID" => title.id},
-    #     "sort" => nil,
-    #     "flags" => nil
-    #   }],
-    #   "__K" => token
-    # })
+    postData = JSON.generate({
+      "type" => "Title",
+      "pk" => "ID",
+      "statements" => [{
+        "filters" => {"ID" => title.id},
+        "sort" => nil,
+        "flags" => nil
+      }],
+      "__K" => 'SGdUqry2bsvpKLWx90UD99k+t9r2GHZwFeBP6+zE+W8='
+    })
 
-    puts postData
 
-    resp = RestClient.post(url, postData)
+    headers = {
+      'Cookie' => 'rbuser=Validation=dE10WOWe5oZjhBmgr1WKx4m4tfKQ4Ms9rsY6Gg3EvF0='
+    }
+
+    resp = RestClient.post(url, postData, headers)
 
     match = /\{.*?\:(.*)\}/.match(resp.body)
     raise "couldn't find metadata in #{resp.body}" unless match
