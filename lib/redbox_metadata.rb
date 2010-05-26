@@ -23,12 +23,13 @@ class RedboxMetadata
         "sort" => nil,
         "flags" => nil
       }],
-      "__K" => 'SGdUqry2bsvpKLWx90UD99k+t9r2GHZwFeBP6+zE+W8='
+      "__K" => token
     })
 
 
     headers = {
-      'Cookie' => 'rbuser=Validation=dE10WOWe5oZjhBmgr1WKx4m4tfKQ4Ms9rsY6Gg3EvF0='
+      'Cookie' => "rbuser=#{cookies['rbuser']}",
+      'Content-Type' => 'application/json'
     }
 
     resp = RestClient.post(url, postData, headers)
