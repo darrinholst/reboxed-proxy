@@ -13,6 +13,7 @@ class RedboxMetadata
 
   def add_to(title)
     puts "adding metadata to #{title.name}(#{title.id})"
+    puts token
 
     postData = JSON.generate({
       "type" => "Title",
