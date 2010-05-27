@@ -30,7 +30,7 @@ class RedboxSlurper
         title.product_type = row['ProductType']
         puts("adding #{title.name}")
         title.save
-        #metadata.add_to(title)
+        metadata.add_to(title)
         new_movies += 1
       end
     end

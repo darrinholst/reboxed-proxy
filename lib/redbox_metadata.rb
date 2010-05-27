@@ -9,7 +9,23 @@ class RedboxMetadata
   def initialize_token
     resp = RestClient.get("http://www.redbox.com")
     self.token = resp.body.match(/__K.*value="(.*)"/)[1]
-    self.cookies = resp.cookies
+    self.cookies = parse_cookies(resp.headers[:set_cookie])
+  end
+
+  def parse_cookies(cookies)
+    out = {}
+
+    [cookies].flatten.each do |raw_cookie|
+      raw_cookie.split("; ").each do |cookie_part|
+  			key, val = cookie_part.split('=', 2)
+
+  			unless %w(expires domain path secure, HttpOnly).member?(key)
+  				out[key] = val
+  			end
+			end
+    end
+
+    out
   end
 
   def add_to(title)
@@ -26,10 +42,9 @@ class RedboxMetadata
       "__K" => token
     })
 
-
     headers = {
-      'Cookie' => "rbuser=#{cookies['rbuser']}",
-      'Content-Type' => 'application/json'
+      'Cookie' => cookies.map{|k,v| "#{k}=#{v}"}.join("; "),
+      'Content-Type' => 'application/json; charset=utf-8'
     }
 
     resp = RestClient.post(url, postData, headers)
