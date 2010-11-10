@@ -1,7 +1,7 @@
 class MoviesController < ApplicationController
   def index
     date = Chronic.parse(params[:since] || "8/5/76")
-    cache_key = date.strftime("%Y%m%d")
+    cache_key = "movies" + date.strftime("%Y%m%d")
     cached = Rails.cache.read(cache_key)
 
     unless(cached)
