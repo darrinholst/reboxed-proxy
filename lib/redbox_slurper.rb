@@ -18,7 +18,7 @@ class RedboxSlurper
     new_movies = 0
 
     json.each_with_index do |row, i|
-      if(row["releaseDays"].to_i >= -21)
+      if(row["releaseDays"].to_i >= -14)
         begin
           Title.find(row["ID"])
         rescue ActiveRecord::RecordNotFound => e
