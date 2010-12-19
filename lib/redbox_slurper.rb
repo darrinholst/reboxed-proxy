@@ -8,30 +8,32 @@ class RedboxSlurper
 
   def slurp_titles
     puts "getting #{url}"
-    resp = RestClient.get(url)
+    resp = RestClient.get(url, {:cookies => {"RB_2.0" => "1"}})
 
-    match = /=\ *(\[.*\]);/.match(resp.body)
+    match = /=\ *(\[.*\])/.match(resp.body)
     raise "couldn't find movies in #{resp.body}" unless match
 
     json = JSON.parse(match[1])
     puts "found #{json.length} movies"
     new_movies = 0
 
-    json.each do |row|
-      begin
-        Title.find(row["ID"])
-      rescue ActiveRecord::RecordNotFound => e
-        title = Title.new
-        title.id = row['ID']
-        title.name = row['Name']
-        title.sort_name = row['SortName']
-        title.image = row['Img']
-        title.released = Date.parse(row['Release'])
-        title.product_type = row['ProductType']
-        puts("adding #{title.name}")
-        title.save
-        metadata.add_to(title)
-        new_movies += 1
+    json.each_with_index do |row, i|
+      if(row["releaseDays"].to_i >= -21)
+        begin
+          Title.find(row["ID"])
+        rescue ActiveRecord::RecordNotFound => e
+          title = Title.new
+          title.id = row['ID']
+          title.name = row['name']
+          title.sort_name = row['sortName']
+          title.image = row['img']
+          title.released = Date.parse(row['release'])
+          title.product_type = row['productType']
+          puts("adding #{title.name}")
+          title.save
+          metadata.add_to(title)
+          new_movies += 1
+        end
       end
     end
 
