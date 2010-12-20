@@ -1,6 +1,3 @@
-#TITLES_URL = "http://www.redbox.com/data.svc/Title/js"
-#METADATA_URL = "http://www.redbox.com/data.svc/Title"
-
 TITLES_URL = "http://www.redbox.com/api/product/js/__titles"
 METADATA_URL = "http://www.redbox.com/api/Product/GetDetail/"
 
