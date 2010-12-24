@@ -8,7 +8,7 @@ Redbox.initialize = function() {
 
       if(match && match.length > 1) {
         Redbox.key2 = match[1]
-        console.log(Redbox.key2)
+        Log.debug(Redobx.key2)
       }
 
       match = response.responseText.match(/__K.*value="(.*)"/)
@@ -16,7 +16,7 @@ Redbox.initialize = function() {
 
       if(match && match.length > 1) {
         Redbox.key = match[1]
-        console.log(Redbox.key)
+        Log.debug(Redbox.key)
       }
     }
   })
