@@ -2,6 +2,7 @@ Redbox.initialize = function() {
   new Ajax.Request("http://www.redbox.com/", {
     method: "get",
     onSuccess: function(response) {
+      Log.debug(response.responseText)
       var match = response.responseText.match(/rb\.api\.key *= * [',"](.*?)[',"]/)
 
       if(match && match.length > 1) {
