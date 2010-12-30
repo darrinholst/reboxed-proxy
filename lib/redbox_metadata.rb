@@ -1,8 +1,14 @@
 class RedboxMetadata
-  attr_accessor :url
+  attr_accessor :url, :token
 
   def initialize(url)
     self.url = url
+    initialize_token
+  end
+
+  def initialize_token
+    resp = RestClient.get("http://www.redbox.com", :cookies => {"RB_2.0" => "1"})
+    self.token = resp.body.match(/rb\.api\.key *= * [',"](.*?)[',"]/)[1]
   end
 
   def add_to(title)
@@ -11,12 +17,12 @@ class RedboxMetadata
     postData = JSON.generate({
       "productType" => title.product_type,
       "id" => title.id,
-      "__K" => "UNKNOWN"
     })
 
     headers = {
       "Cookie" => "RB_2.0=1",
-      "Content-Type" => 'application/json; charset=utf-8'
+      "Content-Type" => 'application/json; charset=utf-8',
+      "__K" => token
     }
 
     resp = RestClient.post(url, postData, headers)

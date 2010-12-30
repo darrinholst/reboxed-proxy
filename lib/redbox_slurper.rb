@@ -8,7 +8,7 @@ class RedboxSlurper
 
   def slurp_titles
     puts "getting #{url}"
-    resp = RestClient.get(url, {:cookies => {"RB_2.0" => "1"}})
+    resp = RestClient.get(url, :cookies => {"RB_2.0" => "1"})
 
     match = /=\ *(\[.*\])/.match(resp.body)
     raise "couldn't find movies in #{resp.body}" unless match
@@ -18,6 +18,7 @@ class RedboxSlurper
     new_movies = 0
 
     json.each_with_index do |row, i|
+      if(new_movies < 5)
       if(row["releaseDays"].to_i >= -14)
         begin
           Title.find(row["ID"])
@@ -34,6 +35,7 @@ class RedboxSlurper
           metadata.add_to(title)
           new_movies += 1
         end
+      end
       end
     end
 
