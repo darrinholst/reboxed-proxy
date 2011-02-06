@@ -15,15 +15,11 @@ class Redbox
   private
 
   def api
-    if is_2_0?
+    if self.version == 2
       Redbox2.new(key, cookies)
     else
       Redbox1.new(key, cookies)
     end
-  end
-
-  def is_2_0?
-    cookies.has_key? "RB_2.0"
   end
 
   def save_cookies(resp)
@@ -32,16 +28,17 @@ class Redbox
   end
 
   def check_for_10_key(resp)
-    check_for_match(resp, /__K.*value="(.*)"/)
+    check_for_match(resp, /__K.*value="(.*)"/, 1)
   end
 
   def check_for_20_key(resp)
-    check_for_match(resp, /rb\.api\.key *= * [',"](.*?)[',"]/)
+    check_for_match(resp, /rb\.api\.key *= * [',"](.*?)[',"]/, 2)
   end
 
-  def check_for_match(resp, regex)
+  def check_for_match(resp, regex, api_version)
     match = resp.body.match(regex)
     self.key = match[1] if match
+    self.version = api_version if match
     p "matched on #{regex}" if match
   end
 
