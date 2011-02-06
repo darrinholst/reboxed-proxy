@@ -76,7 +76,5 @@ class Redbox1
       :actors => json["Actors"],
       :genre => json["Genre"],
     })
-
-    raise "that's enough for now"
   end
 end

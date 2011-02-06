@@ -41,6 +41,7 @@ class Redbox
   def check_for_match(resp, regex)
     match = resp.body.match(regex)
     self.key = match[1] if match
+    p "matched on #{regex}" if match
   end
 
   def parse_cookies(cookies)
