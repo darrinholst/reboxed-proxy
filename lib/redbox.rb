@@ -1,5 +1,5 @@
 class Redbox
-  attr_accessor :key, :cookies
+  attr_accessor :key, :cookies, :version
 
   def initialize
     resp = RestClient.get("http://www.redbox.com")
