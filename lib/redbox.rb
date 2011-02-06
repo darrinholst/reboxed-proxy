@@ -28,6 +28,7 @@ class Redbox
 
   def save_cookies(resp)
     self.cookies = parse_cookies(resp.headers[:set_cookie])
+    p self.cookies
   end
 
   def check_for_10_key(resp)
