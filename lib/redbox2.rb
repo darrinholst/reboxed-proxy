@@ -9,7 +9,7 @@ class Redbox2
   def sync
     url = "http://www.redbox.com/api/product/js/__titles"
     p "getting #{url}"
-    resp = RestClient.get("http://www.redbox.com/api/Product/GetDetail/", cookies)
+    resp = RestClient.get("http://www.redbox.com/api/Product/GetDetail/", {"Cookie" => cookies})
 
     match = /=\ *(\[.*\])/.match(resp.body)
     raise "couldn't find movies in #{resp.body}" unless match
