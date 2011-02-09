@@ -9,7 +9,7 @@ class Redbox2
   def sync
     url = "http://www.redbox.com/api/product/js/__titles"
     p "getting #{url}"
-    resp = RestClient.get("http://www.redbox.com/api/Product/GetDetail/", {"Cookie" => cookies})
+    resp = RestClient.get(url, {"Cookie" => cookies})
 
     match = /=\ *(\[.*\])/.match(resp.body)
     raise "couldn't find movies in #{resp.body}" unless match
@@ -46,6 +46,7 @@ class Redbox2
   private
 
   def add_metadata_to(title)
+    url = "http://www.redbox.com/api/Product/GetDetail/"
     p "adding metadata to #{title.name}(#{title.id})"
 
     postData = JSON.generate({
