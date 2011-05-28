@@ -1,5 +1,5 @@
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     actionmailer (2.3.10)
       actionpack (= 2.3.10)
@@ -12,8 +12,9 @@ GEM
       activesupport (= 2.3.10)
     activesupport (2.3.10)
     caleb-chronic (0.3.0)
+    dalli (2.6.4)
     json (1.2.3)
-    memcached (0.19.2)
+    memcachier (0.0.2)
     mime-types (1.16)
     rack (1.1.0)
     rails (2.3.10)
@@ -33,8 +34,9 @@ PLATFORMS
 
 DEPENDENCIES
   caleb-chronic (= 0.3.0)
+  dalli
   json (= 1.2.3)
-  memcached (= 0.19.2)
+  memcachier
   rails (= 2.3.10)
   rest-client (= 1.5.1)
   sqlite3-ruby (= 1.2.5)

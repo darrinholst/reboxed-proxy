@@ -3,8 +3,16 @@
 
 require(File.join(File.dirname(__FILE__), 'config', 'boot'))
 
+require 'net/http'
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
 require 'tasks/rails'
+
+task 'foo' do
+  1000.times do
+    p "FUMULLINS"
+    sleep 10
+  end
+end
